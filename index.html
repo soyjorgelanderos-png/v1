@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head><link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +16,34 @@
       height: 100%;
       font-family: Arial, sans-serif;
     }
+/* Elimina margen y padding por defecto */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Ajusta fondo y centrado */
+.fondo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centra vertical */
+  align-items: center;     /* centra horizontal */
+  height: 100vh;           /* ocupa toda la pantalla */
+  text-align: center;
+  background-color: #f8f8f8; /* solo ejemplo */
+}
+
+.fondo h1, .fondo p {
+  margin: 0; /* elimina margen extra */
+}
+
+.contador {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px; /* si quieres un poco de espacio */
+}
 
 .modal-content {
   text-align: center;
@@ -37,9 +69,10 @@
   border-radius: 20px;
   cursor: pointer;
 }
-    /* Imagen de fondo */
+    /* Imagen de fondo  y color del texto*/
     .fondo {
-      background: url("fondo.png") no-repeat center center/cover;
+   background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+              url("fondo.png") no-repeat center center/cover;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -49,7 +82,7 @@
       text-align: center;
     }
 
-    /* Modal de bienvenida */
+    /* Modal de bienvenida  y fondo detras del boton*/
     .modal {
       position: fixed;
       top: 0;
@@ -63,8 +96,16 @@
       z-index: 10;
     }
 
+    /* Letras del contador y color */
+    .contador-estilo {
+  font-size: 44x;
+  font-family: 'Great Vibes', cursive; /* si quieres fuente cursiva pegada */
+  color: rgb(255, 255, 255);
+}
+
+/* Color de la caja de texto boton */
     .modal-content {
-      background: white;
+      background: rgb(255, 255, 255);
       color: black;
       padding: 20px;
       border-radius: 10px;
@@ -113,7 +154,7 @@
 <div class="modal" id="modalBienvenida">
   <div class="modal-content">
     <p class="texto-bienvenida">Bienvenidos a la invitación de</p>
-    <p class="nombre">Brenda Darani</p>
+    <p class="nombre" style="font-family: 'Great Vibes', cursive;">Georgina Andrea</p>
     <button onclick="cerrarModal()">Ingresar</button>
   </div>
 </div>
@@ -122,8 +163,7 @@
   <!-- Fondo con contador -->
 <div class="fondo">
   <div>
-    <h1 style="font-size:50px;">BD</h1>
-    <p class="frase">Un instante, una ilusión, un recuerdo eterno</p>
+    <p class="frase" style="font-family: 'Allura'; font-size: 33px; white; -webkit-text-stroke: 1.5px rgb(255, 239, 239);">Un instante, una ilusión, un recuerdo eterno</p>
   </div>
 </div>
 
@@ -151,10 +191,12 @@
       var segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
       document.getElementById("contador").innerHTML =
+      "<div class='contador-estilo'>" +
         "<span>" + dias + "<br>Días</span>" +
         "<span>" + horas + "<br>Horas</span>" +
         "<span>" + minutos + "<br>Minutos</span>" +
         "<span>" + segundos + "<br>Segundos</span>";
+        "</div>";
 
       if (distancia < 0) {
         clearInterval(x);
