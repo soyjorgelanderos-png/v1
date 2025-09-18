@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+.modal-content {
+  text-align: center;
+}
+
+.modal-content .texto-bienvenida {
+  font-size: 18px;
+  margin: 0; /* quita espacio extra */
+}
+
+.modal-content .nombre {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 5px 0 15px 0; /* un poquito de espacio arriba y abajo */
+}
+
+.modal-content button {
+  margin-top: 5px; /* acercar el botón */
+  padding: 8px 20px;
+  border: none;
+  background: gray;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+    /* Imagen de fondo */
+    .fondo {
+      background: url("fondo.png") no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: white;
+      text-align: center;
+    }
+
+    /* Modal de bienvenida */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .modal-content {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 80%;
+    }
+
+    .modal button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      background: gray;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    /* Contador */
+    .contador {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    .contador span {
+      display: inline-block;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modal -->
+<div class="modal" id="modalBienvenida">
+  <div class="modal-content">
+    <p class="texto-bienvenida">Bienvenidos a la invitación de</p>
+    <p class="nombre">Brenda Darani</p>
+    <button onclick="cerrarModal()">Ingresar</button>
+  </div>
+</div>
+
+
+  <!-- Fondo con contador -->
+  <div class="fondo">
+    <div>
+      <h1 style="font-size:50px;">BD</h1>
+      <p>Mis XV Años</p>
+    </div>
+
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <script>
+    // Cerrar modal
+    function cerrarModal() {
+      document.getElementById("modalBienvenida").style.display = "none";
+    }
+
+    // Contador regresivo
+    var fechaEvento = new Date("Nov 08, 2025 14:30:00").getTime();
+
+    var x = setInterval(function() {
+      var ahora = new Date().getTime();
+      var distancia = fechaEvento - ahora;
+
+      var dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      var horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      var segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+      document.getElementById("contador").innerHTML =
+        "<span>" + dias + "<br>Días</span>" +
+        "<span>" + horas + "<br>Horas</span>" +
+        "<span>" + minutos + "<br>Minutos</span>" +
+        "<span>" + segundos + "<br>Segundos</span>";
+
+      if (distancia < 0) {
+        clearInterval(x);
+        document.getElementById("contador").innerHTML = "¡Ya comenzó!";
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

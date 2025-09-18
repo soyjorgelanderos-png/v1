@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Invitación XV Años</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('fondo.png') no-repeat center center;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+    }
+
+    /* Contenedor general */
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Contador */
+/* Contador */
+
+
+
+    /* Pantalla de bienvenida */
+    .welcome {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4); /* fondo semitransparente */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .welcome-box {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 600px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      color: #333;
+    }
+
+    .welcome-box h2 {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    .welcome-box button {
+      background: #aaa;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .welcome-box button:hover {
+      background: #888;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Contador en el fondo -->
+    <div id="countdown"></div>
+
+    <!-- Overlay de bienvenida -->
+    <div class="welcome" id="welcome">
+      <div class="welcome-box">
+        <h2>Bienvenidos a la invitación de<br><b>Brenda Darani</b></h2>
+        <button onclick="entrar()">Ingresar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Al presionar "Ingresar"
+    function entrar() {
+      document.getElementById("welcome").style.display = "none";
+    }
+
+    // Cuenta regresiva
+    var fechaEvento = new Date("Nov 08, 2025 17:00:00").getTime();
+    var x = setInterval(function() {
+      var ahora = new Date().getTime();
+      var distancia = fechaEvento - ahora;
+
+      var dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      var horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      var segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML =
+        dias + " Días " + horas + " Horas " + minutos + " Minutos " + segundos + " Segundos";
+
+      if (distancia < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "¡Ya es el gran día!";
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
