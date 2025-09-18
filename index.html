@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+<head><link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invitación</title>
@@ -81,6 +82,15 @@
       cursor: pointer;
     }
 
+/*Frase*/
+.frase {
+  font-family: "Dancing Script", cursive; /* tipografía elegante */
+  font-size: 20px;
+  font-style: italic;
+  margin-top: -5px;   /* lo pega más al "BD" */
+  margin-bottom: 0;
+}
+    
     /* Contador */
     .contador {
       position: absolute;
@@ -88,7 +98,7 @@
       width: 100%;
       text-align: center;
       font-size: 20px;
-      text-shadow: 1px 1px 3px black;
+      text-shadow: 1px 1px 3px rgb(212, 214, 217);
     }
 
     .contador span {
@@ -110,11 +120,14 @@
 
 
   <!-- Fondo con contador -->
-  <div class="fondo">
-    <div>
-      <h1 style="font-size:50px;">BD</h1>
-      <p>Mis XV Años</p>
-    </div>
+<div class="fondo">
+  <div>
+    <h1 style="font-size:50px;">BD</h1>
+    <p class="frase">Un instante, una ilusión, un recuerdo eterno</p>
+  </div>
+</div>
+
+
 
     <div class="contador" id="contador"></div>
   </div>
