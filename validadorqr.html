@@ -21,7 +21,7 @@
       font-size: 16px;
       border: none;
       border-radius: 8px;
-      background: #007bff;
+      background: #60a7f3;
       color: white;
       cursor: pointer;
       margin: 5px;
@@ -33,6 +33,7 @@
       margin-top: 20px;
       font-size: 18px;
       font-weight: bold;
+      min-height: 24px;
     }
   </style>
 </head>
@@ -62,9 +63,13 @@
             qrbox: 250
           },
           (decodedText, decodedResult) => {
-            document.getElementById("resultado").innerText =
-              "QR Detectado: " + decodedText;
-            // 👇 Se quita el stop para que siga leyendo
+            const resultado = document.getElementById("resultado");
+            resultado.innerText = "QR Detectado: " + decodedText;
+
+            // Borra el texto después de 15 segundos
+            setTimeout(() => {
+              resultado.innerText = "";
+            }, 15000);
           },
           (errorMessage) => {
             // errores de escaneo se ignoran
