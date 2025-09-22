@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lector QR Simple</title>
+  <style>
+    body{font-family: Arial, sans-serif; background:#f9fafb; color:#111; padding:20px;}
+    .container{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+    h1{font-size:22px;margin-bottom:10px}
+    #reader{width:100%;min-height:300px;border:2px solid #ddd;border-radius:8px;}
+    .result{margin-top:15px;padding:12px;border-radius:8px;background:#f3f4f6;font-size:18px;font-weight:bold}
+    .controls{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+    button, select{padding:8px 12px;border-radius:6px;border:1px solid #ccc;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Lector de Códigos QR</h1>
+    <div id="reader">Cámara inactiva</div>
+    <div class="controls">
+      <select id="cameraSelect"></select>
+      <button id="startBtn">Iniciar cámara</button>
+      <button id="stopBtn" disabled>Detener</button>
+    </div>
+    <div id="output" class="result">Esperando lectura...</div>
+  </div>
+
+  <script src="https://unpkg.com/html5-qrcode@2.3.7/minified/html5-qrcode.min.js"></script>
+  <script>
+    const readerEl = document.getElementById('reader');
+    const outputEl = document.getElementById('output');
+    const cameraSelect = document.getElementById('cameraSelect');
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+
+    let html5QrcodeScanner = null;
+
+    async function listCameras(){
+      try{
+        const devices = await Html5Qrcode.getCameras();
+        cameraSelect.innerHTML = '';
+        devices.forEach(dev => {
+          const opt = document.createElement('option');
+          opt.value = dev.id;
+          opt.textContent = dev.label || dev.id;
+          cameraSelect.appendChild(opt);
+        });
+      }catch(err){
+        console.error(err);
+        outputEl.textContent = 'Error al detectar cámaras';
+      }
+    }
+
+    startBtn.addEventListener('click', async ()=>{
+      if(!cameraSelect.value){
+        await listCameras();
+        return;
+      }
+      if(html5QrcodeScanner) {
+        try{ await html5QrcodeScanner.stop(); }catch(e){}
+        html5QrcodeScanner.clear();
+        html5QrcodeScanner = null;
+      }
+
+      html5QrcodeScanner = new Html5Qrcode("reader");
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+      outputEl.textContent = 'Iniciando cámara...';
+
+      html5QrcodeScanner.start(
+        cameraSelect.value,
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        (decodedText) => {
+          outputEl.textContent = 'QR leído: ' + decodedText;
+        },
+        () => {}
+      ).catch(err => {
+        console.error(err);
+        outputEl.textContent = 'No se pudo iniciar la cámara';
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+      });
+    });
+
+    stopBtn.addEventListener('click', async ()=>{
+      if(html5QrcodeScanner){
+        try{
+          await html5QrcodeScanner.stop();
+          html5QrcodeScanner.clear();
+        }catch(e){ console.warn(e); }
+      }
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+      outputEl.textContent = 'Cámara detenida';
+      readerEl.innerHTML = 'Cámara inactiva';
+    });
+
+    window.addEventListener('load', ()=>{
+      listCameras();
+    });
+  </script>
+</body>
+</html>
