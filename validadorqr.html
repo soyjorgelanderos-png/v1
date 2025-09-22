@@ -40,7 +40,6 @@
 <body>
   <h1>Validador QR</h1>
   <button onclick="iniciarLector()">Validar</button>
-  <button onclick="detenerLector()">Detener</button>
 
   <div id="reader"></div>
   <div id="resultado"></div>
@@ -70,6 +69,15 @@
             setTimeout(() => {
               resultado.innerText = "";
             }, 15000);
+
+            // Cierra la cámara automáticamente
+            html5QrCode.stop().then(() => {
+              reader.style.display = "none";
+              lectorActivo = false;
+            }).catch(err => {
+              console.error("Error al detener la cámara automáticamente:", err);
+            });
+
           },
           (errorMessage) => {
             // errores de escaneo se ignoran
@@ -79,17 +87,6 @@
         });
 
         lectorActivo = true;
-      }
-    }
-
-    function detenerLector() {
-      if (lectorActivo && html5QrCode) {
-        html5QrCode.stop().then(() => {
-          document.getElementById("reader").style.display = "none";
-          lectorActivo = false;
-        }).catch(err => {
-          console.error("Error al detener el lector:", err);
-        });
       }
     }
   </script>
