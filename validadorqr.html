@@ -10,12 +10,33 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
+      margin: 0;
+      height: 100vh;
+      background-image: url('bg.jpg');
+      background-size: cover;         /* La imagen cubre toda la pantalla */
+      background-position: center;    /* Centrada */
+      background-repeat: no-repeat;   /* No se repite */
+      color: white;                   /* Texto blanco para mejor contraste */
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
     #reader {
       width: 300px;
       margin: 20px auto;
       display: none;
+      background: rgba(0,0,0,0.5); /* Fondo semitransparente para que la cámara resalte */
+      padding: 10px;
+      border-radius: 10px;
     }
+
     button {
       padding: 12px 20px;
       font-size: 16px;
@@ -25,15 +46,22 @@
       color: white;
       cursor: pointer;
       margin: 5px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
+
     button:hover {
       background: #0056b3;
     }
+
     #resultado {
       margin-top: 20px;
       font-size: 18px;
       font-weight: bold;
       min-height: 24px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: inline-block;
     }
   </style>
 </head>
@@ -63,12 +91,12 @@
           },
           (decodedText, decodedResult) => {
             const resultado = document.getElementById("resultado");
-            resultado.innerText = "QR Detectado: " + decodedText;
+            resultado.innerText = "✅ QR Detectado: " + decodedText;
 
-            // Borra el texto después de 15 segundos
+            // Borra el texto después de 10 segundos
             setTimeout(() => {
               resultado.innerText = "";
-            }, 25000);
+            }, 10000);
 
             // Cierra la cámara automáticamente
             html5QrCode.stop().then(() => {
@@ -77,7 +105,6 @@
             }).catch(err => {
               console.error("Error al detener la cámara automáticamente:", err);
             });
-
           },
           (errorMessage) => {
             // errores de escaneo se ignoran
@@ -92,5 +119,7 @@
   </script>
 </body>
 </html>
+
+
 
 
