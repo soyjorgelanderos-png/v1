@@ -6,33 +6,40 @@
   <title>Lector QR</title>
   <script src="https://unpkg.com/html5-qrcode"></script>
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden; /* 🚫 Evita el scroll */
+    }
+
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
-      margin: 0;
-      height: 100vh;
       background-image: url('bg2.png');
-      background-size: cover;         /* La imagen cubre toda la pantalla */
-      background-position: center;    /* Centrada */
-      background-repeat: no-repeat;   /* No se repite */
-      color: white;                   /* Texto blanco para mejor contraste */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      min-height: 100dvh; /* ✅ Usa altura dinámica real en móviles */
     }
 
-    h1 {
-      margin-bottom: 20px;
+    h1, h2 {
+      margin: 0;
+      padding: 5px 0;
     }
 
     #reader {
       width: 300px;
       margin: 20px auto;
       display: none;
-      background: rgba(0,0,0,0.5); /* Fondo semitransparente para que la cámara resalte */
+      background: rgba(0,0,0,0.5);
       padding: 10px;
       border-radius: 10px;
     }
@@ -45,7 +52,7 @@
       background: #60a7f3;
       color: white;
       cursor: pointer;
-      margin: 5px;
+      margin: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
 
@@ -66,7 +73,8 @@
   </style>
 </head>
 <body>
-  <h2>Mix XV</h2>   <h1>Georgina Andrea</h1>
+  <h2>Mix XV</h2>
+  <h1>Georgina Andrea</h1>
   <button onclick="iniciarLector()">Validar pase digital</button>
 
   <div id="reader"></div>
@@ -84,34 +92,22 @@
         html5QrCode = new Html5Qrcode("reader");
 
         html5QrCode.start(
-          { facingMode: "environment" }, // cámara trasera
-          {
-            fps: 10,
-            qrbox: 250
-          },
-          (decodedText, decodedResult) => {
+          { facingMode: "environment" },
+          { fps: 10, qrbox: 250 },
+          (decodedText) => {
             const resultado = document.getElementById("resultado");
             resultado.innerText = "✅ QR Detectado: " + decodedText;
 
-            // Borra el texto después de 10 segundos
-            setTimeout(() => {
-              resultado.innerText = "";
-            }, 20000);
+            // Limpia después de 20s
+            setTimeout(() => resultado.innerText = "", 20000);
 
-            // Cierra la cámara automáticamente
+            // Detiene cámara automáticamente
             html5QrCode.stop().then(() => {
               reader.style.display = "none";
               lectorActivo = false;
-            }).catch(err => {
-              console.error("Error al detener la cámara automáticamente:", err);
-            });
-          },
-          (errorMessage) => {
-            // errores de escaneo se ignoran
+            }).catch(err => console.error("Error al detener cámara:", err));
           }
-        ).catch(err => {
-          console.error("Error al iniciar el lector QR:", err);
-        });
+        ).catch(err => console.error("Error al iniciar lector QR:", err));
 
         lectorActivo = true;
       }
@@ -119,6 +115,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
