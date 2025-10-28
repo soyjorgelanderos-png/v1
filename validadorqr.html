@@ -96,7 +96,7 @@
           { fps: 10, qrbox: 250 },
           (decodedText) => {
             const resultado = document.getElementById("resultado");
-            resultado.innerText = "✅ QR Detectado: " + decodedText;
+            resultado.innerText = "✅ QR Validado con Exito: " + decodedText;
 
             // Limpia después de 20s
             setTimeout(() => resultado.innerText = "", 20000);
@@ -115,6 +115,7 @@
   </script>
 </body>
 </html>
+
 
 
 
