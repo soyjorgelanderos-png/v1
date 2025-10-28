@@ -96,10 +96,10 @@
           { fps: 10, qrbox: 250 },
           (decodedText) => {
             const resultado = document.getElementById("resultado");
-            resultado.innerText = "✅ QR Validado con Exito: " + decodedText;
+            resultado.innerText = "✅ Pase Digital Validado con Exito: " + decodedText;
 
             // Limpia después de 20s
-            setTimeout(() => resultado.innerText = "", 20000);
+            setTimeout(() => resultado.innerText = "", 25000);
 
             // Detiene cámara automáticamente
             html5QrCode.stop().then(() => {
@@ -115,6 +115,7 @@
   </script>
 </body>
 </html>
+
 
 
 
