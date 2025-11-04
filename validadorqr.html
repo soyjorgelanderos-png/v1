@@ -27,7 +27,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100dvh; /* ✅ Usa altura dinámica real en móviles */
+      min-height: 100dvh; /* ✅ Altura dinámica real en móviles */
     }
 
     h1, h2 {
@@ -83,6 +83,7 @@
   <script>
     let html5QrCode;
     let lectorActivo = false;
+    let limpiarTimeout; // 👈 Variable para manejar el temporizador
 
     function iniciarLector() {
       const reader = document.getElementById("reader");
@@ -98,8 +99,13 @@
             const resultado = document.getElementById("resultado");
             resultado.innerText = " " + decodedText;
 
-            // Limpia después de 20s
-            setTimeout(() => resultado.innerText = "", 25000);
+            // 👇 Si ya hay un temporizador activo, se cancela
+            if (limpiarTimeout) clearTimeout(limpiarTimeout);
+
+            // 👇 Nuevo temporizador de 25s
+            limpiarTimeout = setTimeout(() => {
+              resultado.innerText = "";
+            }, 25000);
 
             // Detiene cámara automáticamente
             html5QrCode.stop().then(() => {
@@ -115,15 +121,6 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
 
